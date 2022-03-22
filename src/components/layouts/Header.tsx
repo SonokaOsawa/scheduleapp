@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 
+import { Flex, Link, Box, Button, Spacer } from "@chakra-ui/react";
+
 import { Auth } from "aws-amplify";
 
 import { UserContext } from "../../App";
@@ -14,27 +16,26 @@ const Header: React.FC = () => {
   };
 
   return (
-    <>
-      <h1>
-        <a href="index.html">SAMPLE</a>
-      </h1>
-      <nav>
-        <ul>
-          <li>
-            <a href="index.html">HOME</a>
-          </li>
-          <li>
-            <a href="index.html#about">ABOUT</a>
-          </li>
-          <li>
-            <a href="index.html#menu">MENU</a>
-          </li>
-          <li>
-            <button onClick={signout}>Sign Out</button>
-          </li>
-        </ul>
-      </nav>
-    </>
+    <Flex
+      as="nav"
+      bg="teal.500"
+      color="gray.50"
+      align="center"
+      justify="center"
+      h={16}
+    >
+      <Flex align="center" px={2} display="flex">
+        <Link href="index.html">HOME</Link>
+      </Flex>
+      <Flex align="center" px={2} display="flex" justify="flex-end">
+        <Link href="index.html#about">ABOUT</Link>
+      </Flex>
+      <Flex align="center" flexGrow={2} display="flex">
+        <Button colorScheme="white" variant="outline" onClick={signout}>
+          Sign Out
+        </Button>
+      </Flex>
+    </Flex>
   );
 };
 
