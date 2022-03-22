@@ -1,17 +1,61 @@
-import React from "react";
+import React, { useState, useEffect, createContext } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 
-import Amplify from "aws-amplify";
-import {
-  AmplifyAuthenticator,
-  AmplifySignUp,
-  AmplifySignOut,
-} from "@aws-amplify/ui-react";
+import Amplify, { Auth } from "aws-amplify";
+import { AmplifyAuthenticator, AmplifySignUp } from "@aws-amplify/ui-react";
+import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import awsconfig from "./aws-exports";
+
+import Wrapper from "./components/layouts/Wrapper";
 
 Amplify.configure(awsconfig);
 
+type User = {
+  id: string;
+  username: string;
+  attributes: {
+    email: string;
+    sub: string; // いわゆるUID的なもの（一意の識別子）
+  };
+};
+
+export const UserContext = createContext(
+  {} as {
+    userInfo: User | undefined;
+    setCurrentUser: React.Dispatch<React.SetStateAction<object | undefined>>;
+  }
+);
+
 const App: React.FC = () => {
-  return (
+  const [authState, setAuthState] = useState<AuthState>();
+  const [currentUser, setCurrentUser] = useState<object | undefined>();
+  const [userInfo, setUserInfo] = useState<User>();
+
+  const getUserInfo = async () => {
+    const currentUserInfo = await Auth.currentUserInfo();
+    setUserInfo(currentUserInfo);
+  };
+
+  useEffect(() => {
+    return onAuthUIStateChange((nextAuthState, authData) => {
+      setAuthState(nextAuthState);
+      setCurrentUser(authData);
+    });
+  }, []);
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  return authState === AuthState.SignedIn && currentUser ? (
+    <Router>
+      <UserContext.Provider value={{ userInfo, setCurrentUser }}>
+        <Wrapper>
+          <p>You have successfully signed in</p>
+        </Wrapper>
+      </UserContext.Provider>
+    </Router>
+  ) : (
     <AmplifyAuthenticator>
       <AmplifySignUp
         slot="sign-up"
@@ -21,8 +65,6 @@ const App: React.FC = () => {
           { type: "password" },
         ]}
       ></AmplifySignUp>
-      <h1>You have successfully signed in</h1>
-      <AmplifySignOut />
     </AmplifyAuthenticator>
   );
 };
