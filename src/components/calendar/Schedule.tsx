@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { API } from "aws-amplify";
 import {
   Box,
   Button,
@@ -18,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 
 import { EditSchedule } from "./EditSchedule";
+import { listSchedules } from "../../graphql/queries";
 
 interface Props {
   year: number;
@@ -38,6 +40,7 @@ const DateJap = (date: any, format: string) => {
 
 export const Schedule: React.VFC<Props> = ({ year, month, day }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [schedules, setSchedules] = useState([]);
   const rows = [
     {
       id: 1,
@@ -64,6 +67,14 @@ export const Schedule: React.VFC<Props> = ({ year, month, day }) => {
       alldayStatus: true,
     },
   ];
+  useEffect(() => {
+    fetchSchedules();
+  }, []);
+  const fetchSchedules = async () => {
+    const apiData = await API.graphql({ query: listSchedules });
+    // @ts-ignore
+    setSchedules(apiData.data.listSchedules.items);
+  };
   return (
     <>
       {rows.map(

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "scheduleapp",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/sonoka/Desktop/scheduleapp/amplify/backend/api/scheduleapp/schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7
+    }
+  }
+}
