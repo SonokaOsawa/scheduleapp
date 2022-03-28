@@ -18,23 +18,24 @@ const Header: React.FC = () => {
   return (
     <Flex
       as="nav"
-      bg="teal.500"
+      bg="purple.300"
       color="gray.50"
       align="center"
       justify="center"
       h={16}
     >
-      <Flex align="center" px={2} display="flex">
+      <Box textAlign="center" mx={2}>
         <Link href="index.html">HOME</Link>
-      </Flex>
-      <Flex align="center" px={2} display="flex" justify="flex-end">
+      </Box>
+      <Spacer />
+      <Box textAlign="center" mx={2}>
         <Link href="index.html#about">ABOUT</Link>
-      </Flex>
-      <Flex align="center" flexGrow={2} display="flex">
+      </Box>
+      <Box textAlign="center" mr={2}>
         <Button colorScheme="white" variant="outline" onClick={signout}>
           Sign Out
         </Button>
-      </Flex>
+      </Box>
     </Flex>
   );
 };
