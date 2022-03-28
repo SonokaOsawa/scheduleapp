@@ -16,10 +16,13 @@ import {
   Button,
   Box,
   Spacer,
+  Switch,
+  useBoolean,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
 export const AddSchedule = () => {
+  const [allday, setAllday] = useBoolean();
   return (
     <Popover>
       <PopoverTrigger>
@@ -36,13 +39,21 @@ export const AddSchedule = () => {
         <PopoverBody>
           <Text>予定</Text>
           <Input placeholder="タイトル" size="sm" />
+          <Flex align="center" mt={1}>
+            <Box>終日</Box>
+            <Switch ml={3} colorScheme="purple" onChange={setAllday.toggle} />
+          </Flex>
           <Text mt={1}>日時</Text>
           <Input type="date" size="sm" />
-          <Flex mt={1}>
-            <Input type="time" size="sm" mr={1} />
-            ~
-            <Input type="time" size="sm" ml={1} />
-          </Flex>
+          {allday ? (
+            <></>
+          ) : (
+            <Flex mt={1}>
+              <Input type="time" size="sm" mr={1} />
+              ~
+              <Input type="time" size="sm" ml={1} />
+            </Flex>
+          )}
         </PopoverBody>
         <PopoverFooter border="0">
           <Flex>

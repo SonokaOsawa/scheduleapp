@@ -33,7 +33,7 @@ export const Calendar = () => {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const calendar = createCalendar(year, month);
   const last = new Date(year, month, 0).getDate();
-  const prevlast = new Date(year, month - 1, 0).getDate();
+  // const prevlast = new Date(year, month - 1, 0).getDate();
   const onClick = (n: number) => () => {
     const nextMonth = month + n;
     if (12 < nextMonth) {
@@ -80,9 +80,9 @@ export const Calendar = () => {
                 {week.map((day, j) => (
                   <Td h={20} key={`${i}${j}`} id={String(day)}>
                     {day > last ? (
-                      <Box color="gray.400">{day - last}日</Box>
+                      <>{/* {day - last}日 */}</>
                     ) : day <= 0 ? (
-                      <Box color="gray.400">{prevlast + day}日</Box>
+                      <>{/* {prevlast + day}日 */}</>
                     ) : (
                       <Box>{day}日</Box>
                     )}
