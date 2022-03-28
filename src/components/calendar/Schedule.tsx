@@ -14,12 +14,7 @@ import {
   Flex,
   Spacer,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
+  Text,
 } from "@chakra-ui/react";
 
 import { EditSchedule } from "./EditSchedule";
@@ -50,6 +45,7 @@ export const Schedule: React.VFC<Props> = ({ year, month, day }) => {
       date: "2022-03-29",
       startTime: "13:00",
       endTime: "14:00",
+      alldayStatus: false,
     },
     {
       id: 2,
@@ -57,6 +53,15 @@ export const Schedule: React.VFC<Props> = ({ year, month, day }) => {
       date: "2022-03-30",
       startTime: "13:00",
       endTime: "14:00",
+      alldayStatus: false,
+    },
+    {
+      id: 3,
+      title: "顔合わせ",
+      date: "2022-04-01",
+      startTime: null,
+      endTime: null,
+      alldayStatus: true,
     },
   ];
   return (
@@ -67,17 +72,32 @@ export const Schedule: React.VFC<Props> = ({ year, month, day }) => {
             <React.Fragment key={k}>
               <Popover>
                 <PopoverTrigger>
-                  <Button size="sm">{sche.title}</Button>
+                  <Button size="sm" w={24}>
+                    <Text isTruncated>{sche.title}</Text>
+                  </Button>
                 </PopoverTrigger>
                 <PopoverContent>
                   <PopoverArrow />
                   <PopoverHeader border="0"></PopoverHeader>
                   <PopoverCloseButton />
                   <PopoverBody>
-                    <Box>{DateJap(new Date(sche.date), "YYYY年MM月DD日")}</Box>
                     <Box>
-                      {sche.startTime}~{sche.endTime}
+                      <Text fontSize="xl">{sche.title}</Text>
+                      <Text mt={1}>
+                        {DateJap(new Date(sche.date), "YYYY年MM月DD日")}
+                      </Text>
                     </Box>
+                    <>
+                      {sche.startTime && (
+                        <>
+                          {sche.endTime && (
+                            <Box>
+                              {sche.startTime}~{sche.endTime}
+                            </Box>
+                          )}
+                        </>
+                      )}
+                    </>
                   </PopoverBody>
                   <PopoverFooter border="0">
                     <Flex>
@@ -95,6 +115,7 @@ export const Schedule: React.VFC<Props> = ({ year, month, day }) => {
                   date={sche.date}
                   startTime={sche.startTime}
                   endTime={sche.endTime}
+                  alldayStatus={sche.alldayStatus}
                 />
               </Modal>
             </React.Fragment>
