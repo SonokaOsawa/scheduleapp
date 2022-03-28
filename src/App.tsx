@@ -7,6 +7,7 @@ import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import awsconfig from "./aws-exports";
 
 import Wrapper from "./components/layouts/Wrapper";
+import { Calendar } from "./components/calendar/Calendar";
 
 Amplify.configure(awsconfig);
 
@@ -51,7 +52,7 @@ const App: React.FC = () => {
     <Router>
       <UserContext.Provider value={{ userInfo, setCurrentUser }}>
         <Wrapper>
-          <p>You have successfully signed in</p>
+          <Calendar />
         </Wrapper>
       </UserContext.Provider>
     </Router>
