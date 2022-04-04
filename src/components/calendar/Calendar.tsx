@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
+import { API } from "aws-amplify";
 
 import {
   Box,
@@ -17,6 +18,8 @@ import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 
 import { Schedule } from "./Schedule";
 import { AddSchedule } from "./AddSchedule";
+import { listSchedules } from "../../graphql/queries";
+import { CreateScheduleInput } from "../../API";
 
 const createCalendar = (year: number, month: number) => {
   const first = new Date(year, month - 1, 1).getDay();
@@ -31,6 +34,19 @@ const createCalendar = (year: number, month: number) => {
 export const Calendar = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [schedules, setSchedules] = useState<CreateScheduleInput[]>([]);
+  const fetchSchedules = async () => {
+    const apiData = await API.graphql({ query: listSchedules });
+    // @ts-ignore
+    setSchedules(apiData.data.listSchedules.items);
+    // @ts-ignore
+    // console.log(apiData.data.listSchedules.items);
+  };
+
+  useEffect(() => {
+    fetchSchedules();
+  }, []);
+
   const calendar = createCalendar(year, month);
   const last = new Date(year, month, 0).getDate();
   // const prevlast = new Date(year, month - 1, 0).getDate();
@@ -53,7 +69,7 @@ export const Calendar = () => {
           <Box fontSize="4xl" mx={4} textAlign="center">
             {`${year}年${month}月`}
           </Box>
-          <AddSchedule />
+          <AddSchedule fetchSchedules={fetchSchedules} />
           <Spacer />
           <Button mr={1} onClick={onClick(-1)} variant="outline">
             <Icon as={ArrowBackIcon} />
@@ -87,7 +103,13 @@ export const Calendar = () => {
                       <Box>{day}日</Box>
                     )}
                     <Box w={10}>
-                      <Schedule year={year} month={month} day={day} />
+                      <Schedule
+                        year={year}
+                        month={month}
+                        day={day}
+                        schedules={schedules}
+                        fetchSchedules={fetchSchedules}
+                      />
                     </Box>
                   </Td>
                 ))}
