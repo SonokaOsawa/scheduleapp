@@ -21,19 +21,22 @@ import {
   Switch,
   useBoolean,
   useDisclosure,
+  Textarea,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
-type twoType = string | null;
+interface Props {
+  fetchSchedules: () => Promise<void>;
+}
 
-export const AddSchedule = () => {
+export const AddSchedule: React.VFC<Props> = ({ fetchSchedules }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [allday, setAllday] = useBoolean();
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
-  const [startTime, setStarttime] = useState<twoType>(null);
-  const [endTime, setEndtime] = useState<twoType>(null);
-  const [memo, setMemo] = useState<twoType>(null);
+  const [startTime, setStarttime] = useState("");
+  const [endTime, setEndtime] = useState("");
+  const [memo, setMemo] = useState("");
   const handleCreateSchedule = async () => {
     const data: CreateScheduleInput = {
       title: title,
@@ -44,17 +47,26 @@ export const AddSchedule = () => {
       memo: memo,
     };
     try {
-      await API.graphql(graphqlOperation(createSchedule, { input: data }));
+      if (data.alldayStatus === true) {
+        data.startTime = "";
+        data.endTime = "";
+        await API.graphql(graphqlOperation(createSchedule, { input: data }));
+        await fetchSchedules();
+        // console.log(data);
+      } else {
+        await API.graphql(graphqlOperation(createSchedule, { input: data }));
+        await fetchSchedules();
+        // console.log(data);
+      }
       onClose();
       setTitle("");
       setDate("");
-      setStarttime(null);
-      setEndtime(null);
-      setMemo(null);
+      setStarttime("");
+      setEndtime("");
+      setMemo("");
     } catch (err) {
       console.log(err);
     }
-    console.log(data);
   };
   return (
     <Popover isOpen={isOpen}>
@@ -75,6 +87,7 @@ export const AddSchedule = () => {
           <Input
             placeholder="タイトル"
             size="sm"
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <Flex align="center" mt={1}>
@@ -85,6 +98,7 @@ export const AddSchedule = () => {
           <Input
             type="date"
             size="sm"
+            value={date}
             onChange={(e) => setDate(e.target.value)}
           />
           {allday ? (
@@ -95,6 +109,7 @@ export const AddSchedule = () => {
                 type="time"
                 size="sm"
                 mr={1}
+                value={startTime}
                 onChange={(e) => setStarttime(e.target.value)}
               />
               ~
@@ -102,10 +117,13 @@ export const AddSchedule = () => {
                 type="time"
                 size="sm"
                 ml={1}
+                value={endTime}
                 onChange={(e) => setEndtime(e.target.value)}
               />
             </Flex>
           )}
+          <Text mt={1}>Memo</Text>
+          <Textarea onChange={(e) => setMemo(e.target.value)} value={memo} />
         </PopoverBody>
         <PopoverFooter border="0">
           <Flex>

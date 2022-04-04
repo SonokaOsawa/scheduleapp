@@ -20,11 +20,14 @@ import {
 
 import { EditSchedule } from "./EditSchedule";
 import { listSchedules } from "../../graphql/queries";
+import { CreateScheduleInput } from "../../API";
 
 interface Props {
   year: number;
   month: number;
   day: number;
+  fetchSchedules: () => Promise<void>;
+  schedules: CreateScheduleInput[];
 }
 
 const zeroPadding = (num: number) => {
@@ -38,52 +41,23 @@ const DateJap = (date: any, format: string) => {
   return format;
 };
 
-export const Schedule: React.VFC<Props> = ({ year, month, day }) => {
+export const Schedule: React.VFC<Props> = ({
+  year,
+  month,
+  day,
+  fetchSchedules,
+  schedules,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [schedules, setSchedules] = useState([]);
-  const rows = [
-    {
-      id: 1,
-      title: "打ち合わせ",
-      date: "2022-03-29",
-      startTime: "13:00",
-      endTime: "14:00",
-      alldayStatus: false,
-    },
-    {
-      id: 2,
-      title: "打ち合わせ2",
-      date: "2022-03-30",
-      startTime: "13:00",
-      endTime: "14:00",
-      alldayStatus: false,
-    },
-    {
-      id: 3,
-      title: "顔合わせ",
-      date: "2022-04-01",
-      startTime: null,
-      endTime: null,
-      alldayStatus: true,
-    },
-  ];
-  useEffect(() => {
-    fetchSchedules();
-  }, []);
-  const fetchSchedules = async () => {
-    const apiData = await API.graphql({ query: listSchedules });
-    // @ts-ignore
-    setSchedules(apiData.data.listSchedules.items);
-  };
   return (
     <>
-      {rows.map(
+      {schedules.map(
         (sche, k) =>
           sche.date === `${year}-${zeroPadding(month)}-${zeroPadding(day)}` && (
             <React.Fragment key={k}>
               <Popover>
                 <PopoverTrigger>
-                  <Button size="sm" w={24}>
+                  <Button size="sm">
                     <Text isTruncated>{sche.title}</Text>
                   </Button>
                 </PopoverTrigger>
@@ -109,6 +83,7 @@ export const Schedule: React.VFC<Props> = ({ year, month, day }) => {
                         </>
                       )}
                     </>
+                    <Box mt={1}>{sche.memo}</Box>
                   </PopoverBody>
                   <PopoverFooter border="0">
                     <Flex>
@@ -122,11 +97,14 @@ export const Schedule: React.VFC<Props> = ({ year, month, day }) => {
               </Popover>
               <Modal isOpen={isOpen} onClose={onClose}>
                 <EditSchedule
+                  id={sche.id}
                   title={sche.title}
                   date={sche.date}
                   startTime={sche.startTime}
                   endTime={sche.endTime}
                   alldayStatus={sche.alldayStatus}
+                  memo={sche.memo}
+                  fetchSchedules={fetchSchedules}
                 />
               </Modal>
             </React.Fragment>
