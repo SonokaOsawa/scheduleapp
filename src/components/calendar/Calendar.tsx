@@ -39,8 +39,6 @@ export const Calendar = () => {
     const apiData = await API.graphql({ query: listSchedules });
     // @ts-ignore
     setSchedules(apiData.data.listSchedules.items);
-    // @ts-ignore
-    // console.log(apiData.data.listSchedules.items);
   };
 
   useEffect(() => {
@@ -108,7 +106,6 @@ export const Calendar = () => {
                         month={month}
                         day={day}
                         schedules={schedules}
-                        fetchSchedules={fetchSchedules}
                       />
                     </Box>
                   </Td>

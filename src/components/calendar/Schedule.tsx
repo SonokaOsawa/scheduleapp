@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { API } from "aws-amplify";
+import { useHistory } from "react-router-dom";
 import {
   Box,
   Button,
-  useDisclosure,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -14,19 +13,15 @@ import {
   PopoverCloseButton,
   Flex,
   Spacer,
-  Modal,
   Text,
 } from "@chakra-ui/react";
 
-import { EditSchedule } from "./EditSchedule";
-import { listSchedules } from "../../graphql/queries";
 import { CreateScheduleInput } from "../../API";
 
 interface Props {
   year: number;
   month: number;
   day: number;
-  fetchSchedules: () => Promise<void>;
   schedules: CreateScheduleInput[];
 }
 
@@ -41,14 +36,9 @@ const DateJap = (date: any, format: string) => {
   return format;
 };
 
-export const Schedule: React.VFC<Props> = ({
-  year,
-  month,
-  day,
-  fetchSchedules,
-  schedules,
-}) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+export const Schedule: React.VFC<Props> = ({ year, month, day, schedules }) => {
+  const history = useHistory();
+
   return (
     <>
       {schedules.map(
@@ -88,25 +78,26 @@ export const Schedule: React.VFC<Props> = ({
                   <PopoverFooter border="0">
                     <Flex>
                       <Spacer />
-                      <Button size="sm" onClick={onOpen}>
+                      <Button
+                        size="sm"
+                        onClick={() =>
+                          history.push("/EditSchedule", {
+                            id: sche.id,
+                            title: sche.title,
+                            date: sche.date,
+                            startTime: sche.startTime,
+                            endTime: sche.endTime,
+                            memo: sche.memo,
+                            alldayStatus: sche.alldayStatus,
+                          })
+                        }
+                      >
                         編集
                       </Button>
                     </Flex>
                   </PopoverFooter>
                 </PopoverContent>
               </Popover>
-              <Modal isOpen={isOpen} onClose={onClose}>
-                <EditSchedule
-                  id={sche.id}
-                  title={sche.title}
-                  date={sche.date}
-                  startTime={sche.startTime}
-                  endTime={sche.endTime}
-                  alldayStatus={sche.alldayStatus}
-                  memo={sche.memo}
-                  fetchSchedules={fetchSchedules}
-                />
-              </Modal>
             </React.Fragment>
           )
       )}
