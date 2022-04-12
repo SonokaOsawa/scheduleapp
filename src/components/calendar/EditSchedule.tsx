@@ -15,6 +15,8 @@ import {
 
 import { CreateScheduleInput } from "../../API";
 import { updateSchedule } from "../../graphql/mutations";
+import { RadioColor } from "./RadioColor";
+import { DeleteScheduleButton } from "./DeleteScheduleButton";
 
 interface LocationState {
   id: string;
@@ -24,6 +26,7 @@ interface LocationState {
   endTime: string;
   memo: string;
   alldayStatus: boolean;
+  color: string;
 }
 
 export const EditSchedule: React.VFC = () => {
@@ -32,20 +35,22 @@ export const EditSchedule: React.VFC = () => {
   const history = useHistory();
 
   const [allday, setAllday] = useBoolean(prop.alldayStatus);
-  const [uptitle, setTitle] = useState(prop.title);
-  const [update, setDate] = useState(prop.date);
-  const [upstartTime, setStarttime] = useState(prop.startTime);
-  const [upendTime, setEndtime] = useState(prop.endTime);
-  const [upmemo, setMemo] = useState(prop.memo);
+  const [title, setTitle] = useState(prop.title);
+  const [date, setDate] = useState(prop.date);
+  const [startTime, setStarttime] = useState(prop.startTime);
+  const [endTime, setEndtime] = useState(prop.endTime);
+  const [memo, setMemo] = useState(prop.memo);
+  const [color, setColor] = useState(prop.color);
   const handleUpdateSchedule = async () => {
     const data: CreateScheduleInput = {
       id: prop.id,
-      title: uptitle,
-      date: update,
+      title: title,
+      date: date,
       alldayStatus: allday,
-      startTime: upstartTime,
-      endTime: upendTime,
-      memo: upmemo,
+      startTime: startTime,
+      endTime: endTime,
+      memo: memo,
+      color: color,
     };
     try {
       if (data.alldayStatus === true) {
@@ -67,10 +72,10 @@ export const EditSchedule: React.VFC = () => {
     <>
       <Box mt={5} px={5}>
         <Input
-          defaultValue={uptitle}
+          defaultValue={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <Flex align="center" mt={1}>
+        <Flex align="center" mt={3}>
           <Box>終日</Box>
           <Switch
             ml={3}
@@ -79,11 +84,14 @@ export const EditSchedule: React.VFC = () => {
             onChange={setAllday.toggle}
           />
         </Flex>
-        <Text mt={1}>日時</Text>
+        <Box mt={2}>
+          <RadioColor color={color} setColor={setColor} />
+        </Box>
+        <Text mt={3}>日時</Text>
         <Input
           type="date"
           size="sm"
-          defaultValue={update}
+          defaultValue={date}
           onChange={(e) => setDate(e.target.value)}
         />
         {allday ? (
@@ -96,7 +104,7 @@ export const EditSchedule: React.VFC = () => {
                   type="time"
                   size="sm"
                   mr={1}
-                  defaultValue={upstartTime}
+                  defaultValue={startTime}
                   onChange={(e) => setStarttime(e.target.value)}
                 />
                 ~
@@ -104,21 +112,22 @@ export const EditSchedule: React.VFC = () => {
                   type="time"
                   size="sm"
                   ml={1}
-                  defaultValue={upendTime}
+                  defaultValue={endTime}
                   onChange={(e) => setEndtime(e.target.value)}
                 />
               </Flex>
             </Box>
           </>
         )}
-        <Text mt={1}>Memo</Text>
+        <Text mt={3}>Memo</Text>
         <Textarea
           onChange={(e) => setMemo(e.target.value)}
-          defaultValue={upmemo}
+          defaultValue={memo}
         />
-        <Button mt={1} size="sm" onClick={handleUpdateSchedule}>
+        <Button mt={3} mr={1} size="sm" onClick={handleUpdateSchedule}>
           保存
         </Button>
+        <DeleteScheduleButton id={prop.id} />
       </Box>
     </>
   );

@@ -24,6 +24,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
+import { RadioColor } from "./RadioColor";
 
 interface Props {
   fetchSchedules: () => Promise<void>;
@@ -37,6 +38,7 @@ export const AddSchedule: React.VFC<Props> = ({ fetchSchedules }) => {
   const [startTime, setStarttime] = useState("");
   const [endTime, setEndtime] = useState("");
   const [memo, setMemo] = useState("");
+  const [color, setColor] = useState("");
   const handleCreateSchedule = async () => {
     const data: CreateScheduleInput = {
       title: title,
@@ -45,6 +47,7 @@ export const AddSchedule: React.VFC<Props> = ({ fetchSchedules }) => {
       startTime: startTime,
       endTime: endTime,
       memo: memo,
+      color: color,
     };
     try {
       if (data.alldayStatus === true) {
@@ -69,7 +72,7 @@ export const AddSchedule: React.VFC<Props> = ({ fetchSchedules }) => {
     }
   };
   return (
-    <Popover isOpen={isOpen}>
+    <Popover size="lg" isOpen={isOpen}>
       <PopoverTrigger>
         <IconButton
           icon={<AddIcon />}
@@ -94,6 +97,7 @@ export const AddSchedule: React.VFC<Props> = ({ fetchSchedules }) => {
             <Box>終日</Box>
             <Switch ml={3} colorScheme="purple" onChange={setAllday.toggle} />
           </Flex>
+          <RadioColor color={color} setColor={setColor} />
           <Text mt={1}>日時</Text>
           <Input
             type="date"

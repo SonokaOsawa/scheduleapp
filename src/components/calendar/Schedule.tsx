@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import {
   Box,
@@ -47,7 +47,7 @@ export const Schedule: React.VFC<Props> = ({ year, month, day, schedules }) => {
             <React.Fragment key={k}>
               <Popover>
                 <PopoverTrigger>
-                  <Button size="sm">
+                  <Button size="sm" colorScheme={sche.color}>
                     <Text isTruncated>{sche.title}</Text>
                   </Button>
                 </PopoverTrigger>
@@ -89,6 +89,7 @@ export const Schedule: React.VFC<Props> = ({ year, month, day, schedules }) => {
                             endTime: sche.endTime,
                             memo: sche.memo,
                             alldayStatus: sche.alldayStatus,
+                            color: sche.color,
                           })
                         }
                       >
