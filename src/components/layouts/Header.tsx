@@ -30,7 +30,7 @@ const Header: React.FC = () => {
         <Button
           colorScheme="white"
           variant="link"
-          onClick={() => history.push("/Calendar")}
+          onClick={() => history.push("/")}
         >
           Calendar
         </Button>

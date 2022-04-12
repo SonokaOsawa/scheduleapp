@@ -6,7 +6,6 @@ import { AmplifyAuthenticator, AmplifySignUp } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import awsconfig from "./aws-exports";
 
-import Wrapper from "./components/layouts/Wrapper";
 import Header from "./components/layouts/Header";
 import { Calendar } from "./components/calendar/Calendar";
 import { EditSchedule } from "./components/calendar/EditSchedule";
@@ -18,7 +17,7 @@ type User = {
   username: string;
   attributes: {
     email: string;
-    sub: string; // いわゆるUID的なもの（一意の識別子）
+    sub: string; // UID的なもの（一意の識別子）
   };
 };
 
@@ -53,20 +52,10 @@ const App: React.FC = () => {
   return authState === AuthState.SignedIn && currentUser ? (
     <Router>
       <UserContext.Provider value={{ userInfo, setCurrentUser }}>
-        {/* <Wrapper> */}
-        {/* <Switch>
-            <Route path="/conponents/calendar/Calendar" component={Calendar} />
-            <Route
-              path="/component/calendar/EditSchedule"
-              component={EditSchedule}
-            />
-          </Switch> */}
-        {/* <Calendar />
-        </Wrapper> */}
         <Header />
         <Switch>
-          <Route path="/Calendar" component={Calendar} />
           <Route path="/EditSchedule" component={EditSchedule} />
+          <Route path="/" component={Calendar} />
         </Switch>
       </UserContext.Provider>
     </Router>
