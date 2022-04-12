@@ -11,4 +11,5 @@ type Schedule @model {
   startTime: String
   endTime: String
   memo: String
+  color: String
 }

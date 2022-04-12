@@ -6,10 +6,11 @@ export type CreateScheduleInput = {
   id?: string | null;
   title: string;
   date: string;
-  alldayStatus: boolean;
+  alldayStatus?: boolean | null;
   startTime?: string | null;
   endTime?: string | null;
   memo?: string | null;
+  color?: string;
 };
 
 export type ModelScheduleConditionInput = {
@@ -19,6 +20,7 @@ export type ModelScheduleConditionInput = {
   startTime?: ModelStringInput | null;
   endTime?: ModelStringInput | null;
   memo?: ModelStringInput | null;
+  color?: ModelStringInput | null;
   and?: Array<ModelScheduleConditionInput | null> | null;
   or?: Array<ModelScheduleConditionInput | null> | null;
   not?: ModelScheduleConditionInput | null;
@@ -79,6 +81,7 @@ export type Schedule = {
   startTime?: string | null;
   endTime?: string | null;
   memo?: string | null;
+  color?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -91,6 +94,7 @@ export type UpdateScheduleInput = {
   startTime?: string | null;
   endTime?: string | null;
   memo?: string | null;
+  color?: string | null;
 };
 
 export type DeleteScheduleInput = {
@@ -105,6 +109,7 @@ export type ModelScheduleFilterInput = {
   startTime?: ModelStringInput | null;
   endTime?: ModelStringInput | null;
   memo?: ModelStringInput | null;
+  color?: ModelStringInput | null;
   and?: Array<ModelScheduleFilterInput | null> | null;
   or?: Array<ModelScheduleFilterInput | null> | null;
   not?: ModelScheduleFilterInput | null;
@@ -147,6 +152,7 @@ export type CreateScheduleMutation = {
     startTime?: string | null;
     endTime?: string | null;
     memo?: string | null;
+    color?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -167,6 +173,7 @@ export type UpdateScheduleMutation = {
     startTime?: string | null;
     endTime?: string | null;
     memo?: string | null;
+    color?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -187,6 +194,7 @@ export type DeleteScheduleMutation = {
     startTime?: string | null;
     endTime?: string | null;
     memo?: string | null;
+    color?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -206,6 +214,7 @@ export type GetScheduleQuery = {
     startTime?: string | null;
     endTime?: string | null;
     memo?: string | null;
+    color?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -229,6 +238,7 @@ export type ListSchedulesQuery = {
       startTime?: string | null;
       endTime?: string | null;
       memo?: string | null;
+      color?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -246,6 +256,7 @@ export type OnCreateScheduleSubscription = {
     startTime?: string | null;
     endTime?: string | null;
     memo?: string | null;
+    color?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -261,6 +272,7 @@ export type OnUpdateScheduleSubscription = {
     startTime?: string | null;
     endTime?: string | null;
     memo?: string | null;
+    color?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -276,6 +288,7 @@ export type OnDeleteScheduleSubscription = {
     startTime?: string | null;
     endTime?: string | null;
     memo?: string | null;
+    color?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null;

@@ -12,6 +12,7 @@ export const getSchedule = /* GraphQL */ `
       startTime
       endTime
       memo
+      color
       createdAt
       updatedAt
     }
@@ -32,6 +33,7 @@ export const listSchedules = /* GraphQL */ `
         startTime
         endTime
         memo
+        color
         createdAt
         updatedAt
       }
