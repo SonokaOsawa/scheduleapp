@@ -57,11 +57,11 @@ export const EditSchedule: React.VFC = () => {
         data.startTime = "";
         data.endTime = "";
         await API.graphql(graphqlOperation(updateSchedule, { input: data }));
-        history.push("/Calendar");
+        history.push("/");
         // console.log(data);
       } else {
         await API.graphql(graphqlOperation(updateSchedule, { input: data }));
-        history.push("/Calendar");
+        history.push("/");
         // console.log(data);
       }
     } catch (err) {

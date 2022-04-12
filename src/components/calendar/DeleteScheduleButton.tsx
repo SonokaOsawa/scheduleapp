@@ -31,7 +31,7 @@ export const DeleteScheduleButton: React.VFC<Prop> = ({ id }) => {
       await API.graphql(
         graphqlOperation(deleteSchedule, { input: { id: id } })
       );
-      history.push("/Calendar");
+      history.push("/");
     } catch (err: any) {
       console.log(err);
     }
