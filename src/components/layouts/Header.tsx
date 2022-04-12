@@ -9,7 +9,6 @@ import { UserContext } from "../../App";
 const Header: React.FC = () => {
   const { setCurrentUser } = useContext(UserContext);
 
-  // サインアウトボタンを設置
   const signout = () => {
     Auth.signOut().catch((err: any) => console.log(err));
     setCurrentUser(undefined);
