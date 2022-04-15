@@ -25,20 +25,27 @@ const Header: React.FC = () => {
       justify="center"
       h={16}
     >
-      <Box textAlign="center" mx={2}>
+      <Box textAlign="center" mx={5}>
         <Button
           colorScheme="white"
           variant="link"
           onClick={() => history.push("/")}
+          _focus={{ boxShadow: "none" }}
         >
-          Calendar
+          スケジュール
+        </Button>
+        <Button
+          colorScheme="white"
+          variant="link"
+          ml={5}
+          onClick={() => history.push("/Household")}
+          _focus={{ boxShadow: "none" }}
+        >
+          家計簿
         </Button>
       </Box>
       <Spacer />
-      <Box textAlign="center" mx={2}>
-        <Link href="index.html#about">ABOUT</Link>
-      </Box>
-      <Box textAlign="center" mr={2}>
+      <Box textAlign="center" mr={4}>
         <Button colorScheme="white" variant="outline" onClick={signout}>
           Sign Out
         </Button>

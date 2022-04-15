@@ -44,7 +44,6 @@ export const Calendar = () => {
   useEffect(() => {
     fetchSchedules();
   }, []);
-
   const calendar = createCalendar(year, month);
   const last = new Date(year, month, 0).getDate();
   // const prevlast = new Date(year, month - 1, 0).getDate();
