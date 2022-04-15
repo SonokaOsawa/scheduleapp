@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { Flex, Link, Box, Button, Spacer } from "@chakra-ui/react";
+import { Flex, Box, Button, Spacer } from "@chakra-ui/react";
 
 import { Auth } from "aws-amplify";
 

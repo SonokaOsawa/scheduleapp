@@ -2,16 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useHistory } from "react-router";
 import API, { graphqlOperation } from "@aws-amplify/api";
 
-import {
-  Flex,
-  Spacer,
-  Box,
-  Text,
-  IconButton,
-  Button,
-  Input,
-  Wrap,
-} from "@chakra-ui/react";
+import { Box, Text, Button, Input, Wrap } from "@chakra-ui/react";
 import { RadioColor } from "../calendar/RadioColor";
 
 interface LocationState {

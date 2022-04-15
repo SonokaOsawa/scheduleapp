@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router";
+import { useLocation, useHistory } from "react-router";
 
 import {
   Select,
@@ -10,33 +10,28 @@ import {
   Button,
   Center,
   Wrap,
-  useToast,
 } from "@chakra-ui/react";
 
 import { RadioInput } from "./RadioInput";
 
-interface Categ {
-  name: string;
+interface Datas {
+  aom: number;
+  date: string;
   plusorminus: string;
-  id: number;
-  color: string;
+  categoryId: number;
 }
 
-const DateJap = (date: any, format: string) => {
-  format = format.replace(/YYYY/, date.getFullYear());
-  format = format.replace(/MM/, date.getMonth() + 1);
-  format = format.replace(/DD/, date.getDate());
-  return format;
-};
-
-export const InputForm = () => {
+export const EditData = () => {
   const history = useHistory();
-  const toast = useToast();
-  const [plusminus, setPlusminus] = useState("支出");
-  const [date, setDate] = useState("");
-  const [amount, setAmount] = useState<number>();
-  const [category, setCategory] = useState("");
-  const categories: Categ[] = [
+  const location = useLocation<Datas>();
+  const prop: Datas = location.state;
+
+  const [plusminus, setPlusminus] = useState(prop.plusorminus);
+  const [date, setDate] = useState(prop.date);
+  const [amount, setAmount] = useState<number>(prop.aom);
+  const [category, setCategory] = useState(prop.categoryId);
+
+  const categories = [
     { name: "食費", plusorminus: "支出", id: 1, color: "green" },
     {
       name: "外食費",
@@ -51,7 +46,8 @@ export const InputForm = () => {
       color: "blue",
     },
   ];
-  const handleAddhousehold = () => {
+
+  const handleEdithousehold = () => {
     const data = {
       plusorminus: plusminus,
       date: date,
@@ -59,33 +55,17 @@ export const InputForm = () => {
       category: Number(category),
     };
     console.log(data);
-    const categoryName = categories.filter((cat) => {
-      return cat.id === Number(category);
-    });
-    toast({
-      position: "top",
-      duration: 3000,
-      render: () => (
-        <Box
-          borderRadius="lg"
-          bg="white"
-          textAlign="center"
-          p={2}
-          color="gray.700"
-        >
-          {DateJap(new Date(date), "YYYY年MM月DD日")}の{plusminus}、{amount}
-          円({categoryName[0].name})を記録しました！
-        </Box>
-      ),
-    });
+    history.push("/Household");
   };
+
   return (
-    <>
+    <Box mt={6} mx={5}>
       <RadioInput plusminus={plusminus} setPlusminus={setPlusminus} />
       <Flex mt={3} alignItems="center" pr={3}>
         <Input
           placeholder="金額(半角数字)を入力してください"
           mr={4}
+          defaultValue={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
         />
         <span>円</span>
@@ -94,7 +74,8 @@ export const InputForm = () => {
         {plusminus === "収入" && (
           <Select
             placeholder="カテゴリーを選んでください"
-            onChange={(e) => setCategory(e.target.value)}
+            defaultValue={category}
+            onChange={(e) => setCategory(Number(e.target.value))}
           >
             {categories
               .filter((plus) => plus.plusorminus === "収入")
@@ -108,7 +89,8 @@ export const InputForm = () => {
         {plusminus === "支出" && (
           <Select
             placeholder="カテゴリーを選んでください"
-            onChange={(e) => setCategory(e.target.value)}
+            defaultValue={category}
+            onChange={(e) => setCategory(Number(e.target.value))}
           >
             {categories
               .filter((minus) => minus.plusorminus === "支出")
@@ -131,13 +113,13 @@ export const InputForm = () => {
         <Input
           type="date"
           size="sm"
-          value={date}
+          defaultValue={date}
           onChange={(e) => setDate(e.target.value)}
         />
       </Box>
       <Center mt={3}>
-        <Button onClick={handleAddhousehold}>保存</Button>
+        <Button onClick={handleEdithousehold}>保存</Button>
       </Center>
-    </>
+    </Box>
   );
 };
