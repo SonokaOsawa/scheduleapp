@@ -12,6 +12,7 @@ import { EditSchedule } from "./components/calendar/EditSchedule";
 import { tabs } from "./components/householdAccountBook/tabs";
 import { Category } from "./components/householdAccountBook/Category";
 import { AddCategory } from "./components/householdAccountBook/AddCategory";
+import { EditData } from "./components/householdAccountBook/EditData";
 
 Amplify.configure(awsconfig);
 
@@ -61,6 +62,7 @@ const App: React.FC = () => {
           <Route exact path="/Household" component={tabs} />
           <Route exact path="/Categories" component={Category} />
           <Route exact path="/Addcategory" component={AddCategory} />
+          <Route exact path="/EditData" component={EditData} />
           <Route exact path="/" component={Calendar} />
         </Switch>
       </UserContext.Provider>

@@ -11,6 +11,7 @@ import {
 import { EditIcon, CalendarIcon } from "@chakra-ui/icons";
 
 import { InputForm } from "./InputForm";
+import { HouseholdCalendar } from "./HouseholdCalendar";
 
 export const tabs = () => {
   return (
@@ -36,7 +37,7 @@ export const tabs = () => {
           <InputForm />
         </TabPanel>
         <TabPanel>
-          <p>カレンダー</p>
+          <HouseholdCalendar />
         </TabPanel>
         <TabPanel>
           <p>支出</p>
