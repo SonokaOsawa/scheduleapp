@@ -9,6 +9,9 @@ import awsconfig from "./aws-exports";
 import Header from "./components/layouts/Header";
 import { Calendar } from "./components/calendar/Calendar";
 import { EditSchedule } from "./components/calendar/EditSchedule";
+import { tabs } from "./components/householdAccountBook/tabs";
+import { Category } from "./components/householdAccountBook/Category";
+import { AddCategory } from "./components/householdAccountBook/AddCategory";
 
 Amplify.configure(awsconfig);
 
@@ -54,8 +57,11 @@ const App: React.FC = () => {
       <UserContext.Provider value={{ userInfo, setCurrentUser }}>
         <Header />
         <Switch>
-          <Route path="/EditSchedule" component={EditSchedule} />
-          <Route path="/" component={Calendar} />
+          <Route exact path="/EditSchedule" component={EditSchedule} />
+          <Route exact path="/Household" component={tabs} />
+          <Route exact path="/Categories" component={Category} />
+          <Route exact path="/Addcategory" component={AddCategory} />
+          <Route exact path="/" component={Calendar} />
         </Switch>
       </UserContext.Provider>
     </Router>
