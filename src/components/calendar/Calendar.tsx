@@ -99,14 +99,16 @@ export const Calendar = () => {
                     ) : (
                       <Box>{day}日</Box>
                     )}
-                    <Box w={10}>
-                      <Schedule
-                        year={year}
-                        month={month}
-                        day={day}
-                        schedules={schedules}
-                      />
-                    </Box>
+                    {schedules && (
+                      <Box w={10}>
+                        <Schedule
+                          year={year}
+                          month={month}
+                          day={day}
+                          schedules={schedules}
+                        />
+                      </Box>
+                    )}
                   </Td>
                 ))}
               </Tr>
