@@ -12,6 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon, AddIcon, MinusIcon } from "@chakra-ui/icons";
 
+import { incomeCategories, expenseCategories } from "./datas";
+
 export const Category = () => {
   const history = useHistory();
   const categories = [
@@ -53,10 +55,10 @@ export const Category = () => {
           </Button>
         </Flex>
         <Box px={3}>
-          {minusCategories.map((minus) => (
-            <Flex key={minus.id} mt={3} alignItems="center">
-              <Badge colorScheme={minus.color} fontSize="md" py={1} px={2}>
-                {minus.name}
+          {expenseCategories.map((ec) => (
+            <Flex key={ec.id} mt={3} alignItems="center">
+              <Badge colorScheme={ec.color} fontSize="md" py={1} px={2}>
+                {ec.name}
               </Badge>
               <Spacer />
               <IconButton aria-label="delete" icon={<DeleteIcon />} />
@@ -80,10 +82,10 @@ export const Category = () => {
           </Button>
         </Flex>
         <Box px={3}>
-          {plusCategories.map((plus) => (
-            <Flex key={plus.id} mt={3} alignItems="center">
-              <Badge colorScheme={plus.color} fontSize="md" py={1} px={2}>
-                {plus.name}
+          {incomeCategories.map((ic) => (
+            <Flex key={ic.id} mt={3} alignItems="center">
+              <Badge colorScheme={ic.color} fontSize="md" py={1} px={2}>
+                {ic.name}
               </Badge>
               <Spacer />
               <IconButton aria-label="delete" icon={<DeleteIcon />} />

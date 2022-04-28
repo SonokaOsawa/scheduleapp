@@ -67,7 +67,7 @@ const App: React.FC = () => {
             path="/HouseholdCalendar"
             component={HouseholdCalendar}
           />
-          <Route exact path="/Expenditure" component={Expense} />
+          <Route exact path="/Expense" component={Expense} />
           <Route exact path="/Categories" component={Category} />
           <Route exact path="/Addcategory" component={AddCategory} />
           <Route exact path="/EditData" component={EditData} />
