@@ -52,7 +52,6 @@ export const InputForm = () => {
         return ic.id === Number(category);
       });
     }
-
     toast({
       position: "top",
       duration: 3000,

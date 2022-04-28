@@ -69,10 +69,7 @@ const Header: React.FC = () => {
             </MenuItem>
             <MenuDivider />
             <MenuGroup title="グラフ" color="black">
-              <MenuItem
-                color="black"
-                onClick={() => history.push("/Expenditure")}
-              >
+              <MenuItem color="black" onClick={() => history.push("/Expense")}>
                 月間支出
               </MenuItem>
               <MenuItem color="black">月間収入</MenuItem>
