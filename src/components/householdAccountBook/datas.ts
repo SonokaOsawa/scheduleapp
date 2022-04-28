@@ -179,7 +179,7 @@ export const expenseCategories = [
   },
 ];
 
-export const incomeCategory = [
+export const incomeCategories = [
   {
     name: "給料",
     id: 3,

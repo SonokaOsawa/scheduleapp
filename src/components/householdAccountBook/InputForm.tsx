@@ -14,13 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 import { RadioInput } from "./RadioInput";
-
-interface Categ {
-  name: string;
-  plusorminus: string;
-  id: number;
-  color: string;
-}
+import { expenseCategories, incomeCategories } from "./datas";
 
 const DateJap = (date: any, format: string) => {
   format = format.replace(/YYYY/, date.getFullYear());
@@ -36,32 +30,29 @@ export const InputForm = () => {
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState<number>();
   const [category, setCategory] = useState("");
-  const categories: Categ[] = [
-    { name: "食費", plusorminus: "支出", id: 1, color: "green" },
-    {
-      name: "外食費",
-      plusorminus: "支出",
-      id: 2,
-      color: "red",
-    },
-    {
-      name: "給料",
-      plusorminus: "収入",
-      id: 3,
-      color: "blue",
-    },
-  ];
   const handleAddhousehold = () => {
     const data = {
-      plusorminus: plusminus,
       date: date,
       amount: amount,
       category: Number(category),
     };
     console.log(data);
-    const categoryName = categories.filter((cat) => {
-      return cat.id === Number(category);
-    });
+
+    let cateName: {
+      name: string;
+      id: number;
+      color: string;
+    }[] = [];
+    if (plusminus === "支出") {
+      cateName = expenseCategories.filter((ec) => {
+        return ec.id === Number(category);
+      });
+    } else if (plusminus === "収入") {
+      cateName = incomeCategories.filter((ic) => {
+        return ic.id === Number(category);
+      });
+    }
+
     toast({
       position: "top",
       duration: 3000,
@@ -74,7 +65,7 @@ export const InputForm = () => {
           color="gray.700"
         >
           {DateJap(new Date(date), "YYYY年MM月DD日")}の{plusminus}、{amount}
-          円({categoryName[0].name})を記録しました！
+          円({cateName[0].name})を記録しました！
         </Box>
       ),
     });
@@ -96,13 +87,11 @@ export const InputForm = () => {
             placeholder="カテゴリーを選んでください"
             onChange={(e) => setCategory(e.target.value)}
           >
-            {categories
-              .filter((plus) => plus.plusorminus === "収入")
-              .map((pl) => (
-                <option key={pl.id} value={pl.id}>
-                  {pl.name}
-                </option>
-              ))}
+            {incomeCategories.map((exCat) => (
+              <option key={exCat.id} value={exCat.id}>
+                {exCat.name}
+              </option>
+            ))}
           </Select>
         )}
         {plusminus === "支出" && (
@@ -110,13 +99,11 @@ export const InputForm = () => {
             placeholder="カテゴリーを選んでください"
             onChange={(e) => setCategory(e.target.value)}
           >
-            {categories
-              .filter((minus) => minus.plusorminus === "支出")
-              .map((min) => (
-                <option key={min.id} value={min.id}>
-                  {min.name}
-                </option>
-              ))}
+            {expenseCategories.map((inCat) => (
+              <option key={inCat.id} value={inCat.id}>
+                {inCat.name}
+              </option>
+            ))}
           </Select>
         )}
 
