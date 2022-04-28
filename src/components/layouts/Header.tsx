@@ -1,6 +1,19 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { Flex, Box, Button, Spacer } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Button,
+  Spacer,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuGroup,
+  MenuDivider,
+} from "@chakra-ui/react";
+
+import { ChevronDownIcon, EditIcon, CalendarIcon } from "@chakra-ui/icons";
 
 import { Auth } from "aws-amplify";
 
@@ -17,32 +30,58 @@ const Header: React.FC = () => {
   const history = useHistory();
 
   return (
-    <Flex
-      as="nav"
-      bg="purple.300"
-      color="gray.50"
-      align="center"
-      justify="center"
-      h={16}
-    >
-      <Box textAlign="center" mx={5}>
+    <Flex as="nav" bg="purple.300" color="gray.50" align="center" h={16}>
+      <Box mx={5}>
         <Button
+          mr={3}
           colorScheme="white"
           variant="link"
           onClick={() => history.push("/")}
           _focus={{ boxShadow: "none" }}
+          textAlign="center"
         >
           スケジュール
         </Button>
-        <Button
-          colorScheme="white"
-          variant="link"
-          ml={5}
-          onClick={() => history.push("/Household")}
-          _focus={{ boxShadow: "none" }}
-        >
-          家計簿
-        </Button>
+        <Menu>
+          <MenuButton
+            as={Button}
+            rightIcon={<ChevronDownIcon />}
+            colorScheme="white"
+            _focus={{ boxShadow: "none" }}
+            textAlign="center"
+          >
+            家計簿
+          </MenuButton>
+          <MenuList>
+            <MenuItem
+              color="black"
+              icon={<EditIcon />}
+              onClick={() => history.push("/InputAOM")}
+            >
+              入力
+            </MenuItem>
+            <MenuItem
+              color="black"
+              icon={<CalendarIcon />}
+              onClick={() => history.push("/HouseholdCalendar")}
+            >
+              カレンダー
+            </MenuItem>
+            <MenuDivider />
+            <MenuGroup title="グラフ" color="black">
+              <MenuItem
+                color="black"
+                onClick={() => history.push("/Expenditure")}
+              >
+                月間支出
+              </MenuItem>
+              <MenuItem color="black">月間収入</MenuItem>
+              <MenuItem color="black">年間支出</MenuItem>
+              <MenuItem color="black">年間収入</MenuItem>
+              <MenuItem color="black">貯金</MenuItem>
+            </MenuGroup>
+          </MenuList>
+        </Menu>
       </Box>
       <Spacer />
       <Box textAlign="center" mr={4}>

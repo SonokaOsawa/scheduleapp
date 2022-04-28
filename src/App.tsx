@@ -9,10 +9,12 @@ import awsconfig from "./aws-exports";
 import Header from "./components/layouts/Header";
 import { Calendar } from "./components/calendar/Calendar";
 import { EditSchedule } from "./components/calendar/EditSchedule";
-import { tabs } from "./components/householdAccountBook/tabs";
+import { InputForm } from "./components/householdAccountBook/InputForm";
 import { Category } from "./components/householdAccountBook/Category";
 import { AddCategory } from "./components/householdAccountBook/AddCategory";
 import { EditData } from "./components/householdAccountBook/EditData";
+import { HouseholdCalendar } from "./components/householdAccountBook/HouseholdCalendar";
+import { Expense } from "./components/householdAccountBook/Monthly/Expense";
 
 Amplify.configure(awsconfig);
 
@@ -59,7 +61,13 @@ const App: React.FC = () => {
         <Header />
         <Switch>
           <Route exact path="/EditSchedule" component={EditSchedule} />
-          <Route exact path="/Household" component={tabs} />
+          <Route exact path="/InputAOM" component={InputForm} />
+          <Route
+            exact
+            path="/HouseholdCalendar"
+            component={HouseholdCalendar}
+          />
+          <Route exact path="/Expenditure" component={Expense} />
           <Route exact path="/Categories" component={Category} />
           <Route exact path="/Addcategory" component={AddCategory} />
           <Route exact path="/EditData" component={EditData} />

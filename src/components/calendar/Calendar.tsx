@@ -61,9 +61,9 @@ export const Calendar = () => {
   };
   return (
     <>
-      <Box>
+      <Box mt={5}>
         <Flex my={2} alignItems="center">
-          <Box fontSize="4xl" mx={4} textAlign="center">
+          <Box fontSize="3xl" mx={4} textAlign="center" fontWeight="bold">
             {`${year}年${month}月`}
           </Box>
           <AddSchedule fetchSchedules={fetchSchedules} />
