@@ -13,3 +13,18 @@ type Schedule @model {
   memo: String
   color: String
 }
+
+type IncomeCategories @model {
+  id: ID!
+  name: String!
+  color: String!
+  data: [Income] @connection
+}
+
+type Income @model {
+  id: ID!
+  cateID: ID!
+  aom: Number!
+  date: String!
+  category: IncomeCategories @connection
+}

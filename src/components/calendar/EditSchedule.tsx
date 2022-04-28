@@ -11,6 +11,7 @@ import {
   Input,
   Text,
   Switch,
+  Wrap,
 } from "@chakra-ui/react";
 
 import { CreateScheduleInput } from "../../API";
@@ -124,10 +125,12 @@ export const EditSchedule: React.VFC = () => {
           onChange={(e) => setMemo(e.target.value)}
           defaultValue={memo}
         />
-        <Button mt={3} mr={1} size="sm" onClick={handleUpdateSchedule}>
-          保存
-        </Button>
-        <DeleteScheduleButton id={prop.id} />
+        <Wrap justify="center" mt={3}>
+          <Button mr={1} size="sm" onClick={handleUpdateSchedule}>
+            保存
+          </Button>
+          <DeleteScheduleButton id={prop.id} />
+        </Wrap>
       </Box>
     </>
   );

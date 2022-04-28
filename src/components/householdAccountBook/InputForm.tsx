@@ -80,7 +80,7 @@ export const InputForm = () => {
     });
   };
   return (
-    <>
+    <Box mt={6} mx={5}>
       <RadioInput plusminus={plusminus} setPlusminus={setPlusminus} />
       <Flex mt={3} alignItems="center" pr={3}>
         <Input
@@ -127,7 +127,7 @@ export const InputForm = () => {
         </Wrap>
       </Box>
       <Box mt={3}>
-        <Text>日付</Text>
+        <Text fontWeight="bold">日付</Text>
         <Input
           type="date"
           size="sm"
@@ -138,6 +138,6 @@ export const InputForm = () => {
       <Center mt={3}>
         <Button onClick={handleAddhousehold}>保存</Button>
       </Center>
-    </>
+    </Box>
   );
 };

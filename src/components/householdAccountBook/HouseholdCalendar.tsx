@@ -45,9 +45,9 @@ export const HouseholdCalendar = () => {
   };
 
   return (
-    <>
+    <Box mt={5}>
       <Flex my={2} alignItems="center">
-        <Text fontSize="2xl" mx={4} textAlign="center" fontWeight="bold">
+        <Text fontSize="3xl" mx={4} textAlign="center" fontWeight="bold">
           {`${year}年${month}月`}
         </Text>
         <Spacer />
@@ -91,6 +91,6 @@ export const HouseholdCalendar = () => {
           ))}
         </Tbody>
       </Table>
-    </>
+    </Box>
   );
 };
