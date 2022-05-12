@@ -4,7 +4,11 @@ import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 
 import { ExpenseGraph } from "./ExpenseGraph";
 import { ExpenseTable } from "./ExpenseTable";
-import { expenseCategories } from "../datas";
+import { expenseCategories, expense } from "../datas";
+
+const zeroPadding = (num: number) => {
+  return ("0" + num).slice(-2);
+};
 
 export const Expense = () => {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -22,6 +26,12 @@ export const Expense = () => {
     }
   };
 
+  const exp = expense.filter((ex) => {
+    return ex.date.slice(0, 7) === `${year}-${zeroPadding(month)}`;
+  });
+  const sum = exp.reduce(function (s, e) {
+    return s + e.aom;
+  }, 0);
   return (
     <>
       <Wrap justify="center" mt={5}>
@@ -51,6 +61,15 @@ export const Expense = () => {
           year={year}
           month={month}
         />
+      </Box>
+      <Box>
+        {expense
+          .filter((ex) => {
+            return ex.date.slice(0, 7) === `${year}-${zeroPadding(month)}`;
+          })
+          .reduce(function (s, e) {
+            return s + e.aom;
+          }, 0)}
       </Box>
     </>
   );
