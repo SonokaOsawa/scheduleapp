@@ -47,9 +47,11 @@ export const Schedule: React.VFC<Props> = ({ year, month, day, schedules }) => {
             <React.Fragment key={k}>
               <Popover>
                 <PopoverTrigger>
-                  <Button size="sm" colorScheme={sche.color}>
-                    <Text isTruncated>{sche.title}</Text>
-                  </Button>
+                  {sche.color && (
+                    <Button size="sm" colorScheme={sche.color}>
+                      <Text isTruncated>{sche.title}</Text>
+                    </Button>
+                  )}
                 </PopoverTrigger>
                 <PopoverContent>
                   <PopoverArrow />

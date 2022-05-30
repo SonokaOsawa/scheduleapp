@@ -7,7 +7,6 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
 
@@ -70,6 +69,7 @@ export const ExpenseTable: React.VFC<Props> = ({
   for (let i = 0; i < e.length; i++) {
     categoryID[i].aom = ExCat[i];
   }
+  // 合計
   const sum = ExCat.reduce((s, e) => {
     return s + e;
   }, 0);
